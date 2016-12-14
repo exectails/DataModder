@@ -41,19 +41,6 @@ namespace DataModder
 			CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("en-US");
 			CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture;
 
-			//var packagesPath = ModPack.GetPackagePath();
-			//var fileNames = new List<string> { @"db\itemdb.xml" };
-
-			//VoidFileNamesInPackages(packagesPath, fileNames);
-			//Console.WriteLine("voided.");
-			//Console.ReadLine();
-
-			//UnvoidFileNamesInPackages(packagesPath, fileNames);
-			//Console.WriteLine("unvoided.");
-			//Console.ReadLine();
-
-			//return;
-
 			Console.WriteLine("Mods:  " + Path.GetFullPath(modsPath));
 			Console.WriteLine("Out:   " + Path.GetFullPath(outPath));
 			Console.WriteLine("Pckgs: " + Path.GetFullPath(packagesPath));
@@ -121,6 +108,23 @@ namespace DataModder
 				if (!errors)
 					StoreHash(actualHash);
 				Console.WriteLine("New:    " + actualHash);
+
+				var fileNames = Directory.EnumerateFiles(outPath, "*", SearchOption.AllDirectories).Select(a => ModPack.NormalizePath(a).Replace(ModPack.NormalizePath(outPath + "/"), ""));
+
+				if (InsideMabiFolder())
+				{
+					if (DataPackerInUse())
+					{
+						Console.WriteLine("Skipping pack modification, since data packer is in use.");
+					}
+					else
+					{
+						UnvoidFileNamesInPackages(packagesPath, fileNames);
+						VoidFileNamesInPackages(packagesPath, fileNames);
+
+						Console.WriteLine("Modified package files to make client use files in data folder.");
+					}
+				}
 			}
 
 			ExitAfter(2000);
@@ -162,6 +166,14 @@ namespace DataModder
 			var filesModded = (fi.Length != 0);
 
 			return filesModded;
+		}
+
+		private static bool InsideMabiFolder()
+		{
+			var patcherExists = File.Exists("Mabinogi.exe");
+			var clientExists = File.Exists("Client.exe");
+
+			return (patcherExists && clientExists);
 		}
 
 		private static string HashFilesAndFolders(params string[] paths)
