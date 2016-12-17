@@ -12,7 +12,7 @@ namespace DataModder.Modding
 	/// <summary>
 	/// Collection of mods.
 	/// </summary>
-	public class ModPack
+	public class ModPack : IDisposable
 	{
 		private object _syncLock = new object();
 
@@ -94,6 +94,26 @@ namespace DataModder.Modding
 			}
 
 			return _packReader;
+		}
+
+		/// <summary>
+		/// Closes open pack reader.
+		/// </summary>
+		public void ClosePackReader()
+		{
+			if (_packReader == null)
+				return;
+
+			_packReader.Close();
+			_packReader = null;
+		}
+
+		/// <summary>
+		/// Closes open pack files.
+		/// </summary>
+		public void Dispose()
+		{
+			this.ClosePackReader();
 		}
 
 		/// <summary>

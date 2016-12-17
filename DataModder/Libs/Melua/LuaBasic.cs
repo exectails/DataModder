@@ -38,6 +38,10 @@ namespace MeluaLib
 		public const int LUA_MASKLINE = (1 << LUA_HOOKLINE);
 		public const int LUA_MASKCOUNT = (1 << LUA_HOOKCOUNT);
 
+		// void lua_close (lua_State *L);
+		[DllImport(Lib, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+		public static extern void lua_close(IntPtr L);
+
 		// LUA_API void lua_call (lua_State *L, int nargs, int nresults)
 		[DllImport(Lib, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
 		public static extern void lua_call(IntPtr L, int nargs, int nresults);
