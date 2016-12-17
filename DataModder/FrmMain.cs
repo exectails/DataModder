@@ -267,6 +267,8 @@ namespace DataModder
 				}
 
 				Trace.WriteLine("Done unvoiding files.");
+
+				File.WriteAllText(fileListPath, "");
 			}
 			catch (IOException ex)
 			{
