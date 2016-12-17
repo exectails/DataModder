@@ -174,34 +174,34 @@ namespace DataModder
 
 		private void BtnEnableDataFiles_Click(object sender, EventArgs e)
 		{
-			//if (!InsideMabiFolder())
-			//{
-			//	Trace.WriteLine("Move DataModder to Mabinogi folder to enable data files.");
-			//	return;
-			//}
+			if (!InsideMabiFolder())
+			{
+				Trace.WriteLine("Move DataModder to Mabinogi folder to enable data files.");
+				return;
+			}
 
-			//if (DataPackerInUse())
-			//{
-			//	Trace.WriteLine("Active DATA packer mods detected, please use a clean client to enable data files with DataModder.");
-			//	return;
-			//}
+			if (DataPackerInUse())
+			{
+				Trace.WriteLine("Active DATA packer mods detected, please use a clean client to enable data files with DataModder.");
+				return;
+			}
 
 			this.Modify();
 		}
 
 		private void BtnRemovMods_Click(object sender, EventArgs e)
 		{
-			//if (!InsideMabiFolder())
-			//{
-			//	Trace.WriteLine("Move DataModder to Mabinogi folder to enable data files.");
-			//	return;
-			//}
+			if (!InsideMabiFolder())
+			{
+				Trace.WriteLine("Move DataModder to Mabinogi folder to enable data files.");
+				return;
+			}
 
-			//if (DataPackerInUse())
-			//{
-			//	Trace.WriteLine("Active DATA packer mods detected, please use a clean client to enable data files with DataModder.");
-			//	return;
-			//}
+			if (DataPackerInUse())
+			{
+				Trace.WriteLine("Active DATA packer mods detected, please use a clean client to enable data files with DataModder.");
+				return;
+			}
 
 			this.RemoveMods();
 		}
