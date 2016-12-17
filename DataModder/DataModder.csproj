@@ -99,13 +99,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="DataModder\mods\anti_tokens\main.lua">
+    <None Include="DataModder\examples\anti_tokens\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DataModder\mods\english_moontunnels\main.lua">
+    <None Include="DataModder\examples\english_moontunnels\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DataModder\mods\login_background\main.lua">
+    <None Include="DataModder\examples\login_background\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DataModder\examples\test\another_mod.lua">
@@ -114,7 +114,7 @@
     <None Include="DataModder\examples\test\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DataModder\mods\urls\main.lua">
+    <None Include="DataModder\examples\urls\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -126,6 +126,7 @@
     <Content Include="DataModder\examples\test\my_improved_waterfall.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="DataModder\mods\readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmMain.resx">
