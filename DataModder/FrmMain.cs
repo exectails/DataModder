@@ -88,7 +88,7 @@ namespace DataModder
 			Trace.WriteLine("Pckgs:  " + Path.GetFullPath(packagesPath));
 
 			var storedHash = GetStoredHash();
-			var actualHash = FileSystemHasher.HashFilesAndFolders(dataPath, modsPath);
+			var actualHash = FileSystemHasher.HashFilesAndFolders(dataPath, modsPath, packagesPath);
 
 			Trace.WriteLine("Stored: " + storedHash);
 			Trace.WriteLine("Actual: " + actualHash);
@@ -157,11 +157,13 @@ namespace DataModder
 				timer.Stop();
 				Trace.WriteLine(string.Format("Applied mods in {0}.", timer.Elapsed));
 
-				actualHash = FileSystemHasher.HashFilesAndFolders(dataPath, modsPath);
+				actualHash = FileSystemHasher.HashFilesAndFolders(dataPath, modsPath, packagesPath);
 				Trace.WriteLine("New:    " + actualHash);
 
 				if (!errors)
 					StoreHash(actualHash);
+
+				Trace.WriteLine("Done.");
 			}
 		}
 
