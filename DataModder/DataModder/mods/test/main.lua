@@ -56,9 +56,9 @@ replacefile('gfx/image/npc/npcportrait_manus_us.dds', 'gfx/image/npc/npcportrait
 loadxmlfile('features.xml.compiled')
 
 -- Enable gfELDHalloween
---setattributes('//Feature[@Hash="24934d26"]', 'Default', 'G0S0')
---setattributes('//Feature[@Hash="24934d26"]', 'Enable', '')
---setattributes('//Feature[@Hash="24934d26"]', 'Disable', '')
+setattributes('//Feature[@Hash="24934d26"]', 'Default', 'G0S0')
+setattributes('//Feature[@Hash="24934d26"]', 'Enable', '')
+setattributes('//Feature[@Hash="24934d26"]', 'Disable', '')
 
 
 -----------------------------------------------------------------------------
@@ -66,3 +66,5 @@ loadxmlfile('features.xml.compiled')
 -----------------------------------------------------------------------------
 
 include('another_mod.lua')
+include('http://127.0.0.1/test.lua')
+--require('http://127.0.0.1/test.lua')

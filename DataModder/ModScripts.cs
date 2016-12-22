@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -81,6 +82,7 @@ namespace DataModder
 			Melua.melua_register(L, "replacefile", replacefile);
 			Melua.melua_register(L, "replace", replace);
 			Melua.melua_register(L, "include", include);
+			Melua.melua_register(L, "require", require);
 		}
 
 		public bool LoadMods(string modPath)
@@ -99,6 +101,7 @@ namespace DataModder
 				var folderName = Path.GetFileName(folderPath);
 
 				_cwd = Path.GetFullPath(folderPath);
+				this.ModCount++;
 
 				Trace.WriteLine(string.Format("Loading '{0}'...", folderName));
 
@@ -106,10 +109,6 @@ namespace DataModder
 				{
 					Trace.WriteLine(string.Format("Error in {1}", folderName, Melua.lua_tostring(L, -1)));
 					errors = true;
-				}
-				else
-				{
-					this.ModCount++;
 				}
 			}
 
@@ -303,21 +302,84 @@ namespace DataModder
 
 		private int include(IntPtr L)
 		{
-			if (!IsXmlFileLoaded())
-				return Melua.melua_error(L, "No XML file loaded.");
-
 			var path = Melua.luaL_checkstring(L, 1);
 			Melua.lua_pop(L, 1);
 
-			var fullPath = Path.GetFullPath(Path.Combine(_cwd, path));
+			var fullPath = path;
+			var isHttp = (path.StartsWith("http://") || path.StartsWith("https://"));
 
-			if (!IsInsideCwd(fullPath))
-				return Melua.melua_error(L, "Invalid path. ({0})", path);
+			int status;
+			if (isHttp)
+			{
+				try
+				{
+					var wc = new WebClient();
+					var script = wc.DownloadString(fullPath);
 
-			if (!File.Exists(fullPath))
-				return Melua.melua_error(L, "File not found. ({0})", path);
+					status = Melua.luaL_dostring(L, script);
+				}
+				catch (WebException)
+				{
+					return 0;
+				}
+			}
+			else
+			{
+				fullPath = Path.GetFullPath(Path.Combine(_cwd, path));
 
-			var status = Melua.luaL_dofile(L, fullPath);
+				if (!IsInsideCwd(fullPath))
+					return Melua.melua_error(L, "Invalid path. ({0})", path);
+
+				if (!File.Exists(fullPath))
+					return 0;
+
+				status = Melua.luaL_dofile(L, fullPath);
+			}
+
+			if (status != 0) // Error
+				return status;
+
+			var returnValues = Melua.lua_gettop(L);
+
+			return returnValues;
+		}
+
+		private int require(IntPtr L)
+		{
+			var path = Melua.luaL_checkstring(L, 1);
+			Melua.lua_pop(L, 1);
+
+			var fullPath = path;
+			var isHttp = (path.StartsWith("http://") || path.StartsWith("https://"));
+
+			int status;
+			if (isHttp)
+			{
+				try
+				{
+					var wc = new WebClient();
+					var script = wc.DownloadString(fullPath);
+
+					status = Melua.luaL_dostring(L, script);
+				}
+				catch (WebException ex)
+				{
+					return Melua.melua_error(L, "Failed to include remote script ({0}).", ex.Message);
+				}
+			}
+			else
+			{
+				fullPath = Path.GetFullPath(Path.Combine(_cwd, path));
+
+				if (!IsInsideCwd(fullPath))
+					return Melua.melua_error(L, "Invalid path. ({0})", path);
+
+				if (!File.Exists(fullPath))
+					return Melua.melua_error(L, "File not found. ({0})", path);
+
+				status = Melua.luaL_dofile(L, fullPath);
+			}
+
 			if (status != 0) // Error
 				return status;
 
