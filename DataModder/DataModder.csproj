@@ -108,10 +108,10 @@
     <None Include="DataModder\examples\login_background\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DataModder\examples\test\another_mod.lua">
+    <None Include="DataModder\mods\test\another_mod.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="DataModder\examples\test\main.lua">
+    <None Include="DataModder\mods\test\main.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DataModder\examples\urls\main.lua">
@@ -123,7 +123,7 @@
     <Content Include="DataModder\lua51.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataModder\examples\test\my_improved_waterfall.xml">
+    <Content Include="DataModder\mods\test\my_improved_waterfall.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataModder\mods\readme.txt" />
