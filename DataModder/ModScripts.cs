@@ -305,43 +305,7 @@ namespace DataModder
 			var path = Melua.luaL_checkstring(L, 1);
 			Melua.lua_pop(L, 1);
 
-			var fullPath = path;
-			var isHttp = (path.StartsWith("http://") || path.StartsWith("https://"));
-
-			int status;
-			if (isHttp)
-			{
-				try
-				{
-					var wc = new WebClient();
-					var script = wc.DownloadString(fullPath);
-
-					status = Melua.luaL_dostring(L, script);
-				}
-				catch (WebException)
-				{
-					return 0;
-				}
-			}
-			else
-			{
-				fullPath = Path.GetFullPath(Path.Combine(_cwd, path));
-
-				if (!IsInsideCwd(fullPath))
-					return Melua.melua_error(L, "Invalid path. ({0})", path);
-
-				if (!File.Exists(fullPath))
-					return 0;
-
-				status = Melua.luaL_dofile(L, fullPath);
-			}
-
-			if (status != 0) // Error
-				return status;
-
-			var returnValues = Melua.lua_gettop(L);
-
-			return returnValues;
+			return this.DoPath(L, path, false);
 		}
 
 		private int require(IntPtr L)
@@ -349,10 +313,15 @@ namespace DataModder
 			var path = Melua.luaL_checkstring(L, 1);
 			Melua.lua_pop(L, 1);
 
+			return this.DoPath(L, path, true);
+		}
+
+		private int DoPath(IntPtr L, string path, bool errorOnMissing)
+		{
 			var fullPath = path;
 			var isHttp = (path.StartsWith("http://") || path.StartsWith("https://"));
+			var status = 0;
 
-			int status;
 			if (isHttp)
 			{
 				try
@@ -364,7 +333,8 @@ namespace DataModder
 				}
 				catch (WebException ex)
 				{
-					return Melua.melua_error(L, "Failed to include remote script ({0}).", ex.Message);
+					if (errorOnMissing)
+						return Melua.melua_error(L, "Failed to include remote script '{0}' ({1}).", fullPath, ex.Message);
 				}
 			}
 			else
@@ -375,12 +345,20 @@ namespace DataModder
 					return Melua.melua_error(L, "Invalid path. ({0})", path);
 
 				if (!File.Exists(fullPath))
-					return Melua.melua_error(L, "File not found. ({0})", path);
+				{
+					if (errorOnMissing)
+						return Melua.melua_error(L, "File not found. ({0})", path);
+					else
+						return 0;
+				}
 
 				status = Melua.luaL_dofile(L, fullPath);
 			}
 
-			if (status != 0) // Error
+			if (status == 1) // Error in do/load
+				return Melua.melua_error(L, Melua.lua_tostring(L, -1));
+
+			if (status != 0) // Error in execution
 				return status;
 
 			var returnValues = Melua.lua_gettop(L);
