@@ -174,7 +174,7 @@ namespace DataModder
 			this.BtnCreateData.Enabled = true;
 		}
 
-		private void BtnEnableDataFiles_Click(object sender, EventArgs e)
+		private void BtnModify_Click(object sender, EventArgs e)
 		{
 			if (!InsideMabiFolder())
 			{
