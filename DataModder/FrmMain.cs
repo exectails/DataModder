@@ -281,5 +281,12 @@ namespace DataModder
 				Trace.WriteLine("Error while enabling files: " + ex.GetType().Name + Environment.NewLine + ex);
 			}
 		}
+
+		private void BtnAllInOne_Click(object sender, EventArgs e)
+		{
+			this.BtnRemovMods_Click(null, null);
+			this.BtnCreateData_Click(null, null);
+			this.BtnModify_Click(null, null);
+		}
 	}
 }
