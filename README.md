@@ -16,7 +16,9 @@ In each of those scripts any number of modifications can be specified,
 which are then executed by the program.
 
 For all modifications it automatically uses the latest version of the file
-from the pack files.
+from the pack files, which it tries to find automatically. If there's a
+package folder in the same folder as the DataModder.exe is, it uses that one.
+Otherwise it searches for the folder of the installed Mabinogi client.
 
 Examples
 -----------------------------------------------------------------------------
