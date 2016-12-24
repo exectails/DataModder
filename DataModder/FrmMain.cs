@@ -291,9 +291,19 @@ namespace DataModder
 
 		private void BtnAllInOne_Click(object sender, EventArgs e)
 		{
+			this.BtnRemovMods.Enabled = false;
+			this.BtnModify.Enabled = false;
+			this.BtnCreateData.Enabled = false;
+			this.BtnAllInOne.Enabled = false;
+
 			this.BtnRemovMods_Click(null, null);
 			this.BtnCreateData_Click(null, null);
 			this.BtnModify_Click(null, null);
+
+			this.BtnRemovMods.Enabled = true;
+			this.BtnModify.Enabled = true;
+			this.BtnCreateData.Enabled = true;
+			this.BtnAllInOne.Enabled = true;
 		}
 	}
 }
