@@ -38,6 +38,13 @@ namespace DataModder
 		{
 			Trace.Listeners.Add(new TextWriterTraceListener(_trace = new StringWriter()));
 			Trace.Listeners.Add(new TextBoxAppendTraceListener(this.TxtTrace));
+
+			var allowPatching = (InsideMabiFolder() && !DataPackerInUse());
+
+			this.BtnRemovMods.Enabled = allowPatching;
+			this.BtnModify.Enabled = allowPatching;
+			this.BtnAllInOne.Enabled = allowPatching;
+			this.LblPatchingNote.Visible = !allowPatching;
 		}
 
 		private static bool DataPackerInUse()

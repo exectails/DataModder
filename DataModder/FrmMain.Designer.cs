@@ -36,6 +36,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.BtnAllInOne = new System.Windows.Forms.Button();
+			this.LblPatchingNote = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// TxtTrace
@@ -55,7 +56,7 @@
 			// 
 			// BtnCreateData
 			// 
-			this.BtnCreateData.Location = new System.Drawing.Point(29, 103);
+			this.BtnCreateData.Location = new System.Drawing.Point(29, 132);
 			this.BtnCreateData.Name = "BtnCreateData";
 			this.BtnCreateData.Size = new System.Drawing.Size(208, 23);
 			this.BtnCreateData.TabIndex = 1;
@@ -65,7 +66,7 @@
 			// 
 			// BtnModify
 			// 
-			this.BtnModify.Location = new System.Drawing.Point(136, 132);
+			this.BtnModify.Location = new System.Drawing.Point(136, 103);
 			this.BtnModify.Name = "BtnModify";
 			this.BtnModify.Size = new System.Drawing.Size(101, 23);
 			this.BtnModify.TabIndex = 2;
@@ -75,7 +76,7 @@
 			// 
 			// BtnRemovMods
 			// 
-			this.BtnRemovMods.Location = new System.Drawing.Point(29, 132);
+			this.BtnRemovMods.Location = new System.Drawing.Point(29, 103);
 			this.BtnRemovMods.Name = "BtnRemovMods";
 			this.BtnRemovMods.Size = new System.Drawing.Size(101, 23);
 			this.BtnRemovMods.TabIndex = 3;
@@ -116,11 +117,22 @@
 			this.BtnAllInOne.UseVisualStyleBackColor = true;
 			this.BtnAllInOne.Click += new System.EventHandler(this.BtnAllInOne_Click);
 			// 
+			// LblPatchingNote
+			// 
+			this.LblPatchingNote.AutoSize = true;
+			this.LblPatchingNote.Location = new System.Drawing.Point(249, 129);
+			this.LblPatchingNote.Name = "LblPatchingNote";
+			this.LblPatchingNote.Size = new System.Drawing.Size(163, 52);
+			this.LblPatchingNote.TabIndex = 8;
+			this.LblPatchingNote.Text = "Move DataModder to your non\r\nDATA packer modded Mabinogi\r\nfolder to enable patchi" +
+    "ng of pack\r\nfiles.";
+			// 
 			// FrmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(436, 460);
+			this.Controls.Add(this.LblPatchingNote);
 			this.Controls.Add(this.BtnAllInOne);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
@@ -133,6 +145,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "FrmMain";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "DataModder";
 			this.Load += new System.EventHandler(this.FrmMain_Load);
 			this.ResumeLayout(false);
@@ -149,5 +162,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button BtnAllInOne;
+		private System.Windows.Forms.Label LblPatchingNote;
 	}
 }
