@@ -40,11 +40,16 @@ namespace DataModder
 			Trace.Listeners.Add(new TextBoxAppendTraceListener(this.TxtTrace));
 
 			var allowPatching = (InsideMabiFolder() && !DataPackerInUse());
+			var allowCreation = PackagePathExists();
 
 			this.BtnRemovMods.Enabled = allowPatching;
 			this.BtnModify.Enabled = allowPatching;
 			this.BtnAllInOne.Enabled = allowPatching;
 			this.LblPatchingNote.Visible = !allowPatching;
+
+			this.BtnCreateData.Enabled = allowCreation;
+			if (!allowCreation)
+				MessageBox.Show("Mabinogi package folder not found.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 
 		private static bool DataPackerInUse()
@@ -64,6 +69,12 @@ namespace DataModder
 			var clientExists = File.Exists("Client.exe");
 
 			return (patcherExists && clientExists);
+		}
+
+		private static bool PackagePathExists()
+		{
+			var packagesPath = ModPack.GetPackagePath();
+			return (packagesPath != null);
 		}
 
 		private static string GetStoredHash()
