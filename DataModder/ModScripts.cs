@@ -11,6 +11,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.XPath;
 
 namespace DataModder
@@ -199,8 +200,18 @@ namespace DataModder
 			if (!IsXPathValid(selector))
 				return Melua.melua_error(L, "Invalid XPath.");
 
+			XElement element;
+			try
+			{
+				element = XElement.Parse(xml);
+			}
+			catch (XmlException ex)
+			{
+				return Melua.melua_error(L, "Failed to parse XML element: {0}", ex.Message);
+			}
+
 			var modder = _loadedXmlModder;
-			_modPack.AddMod(new XmlElementAdder(modder, selector, xml));
+			_modPack.AddMod(new XmlElementAdder(modder, selector, element));
 
 			return 0;
 		}

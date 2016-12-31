@@ -117,17 +117,17 @@ namespace DataModder.Modding.Xml
 		/// Adds element at path.
 		/// </summary>
 		/// <param name="path"></param>
-		/// <param name="xml"></param>
+		/// <param name="element"></param>
 		/// <example>
 		/// // Add an item
 		/// AddElement("/Items", "<Item Id='123' Name='test' />");
 		/// </example>
-		public void AddElement(string path, string xml)
+		public void AddElement(string path, XElement addElement)
 		{
 			this.AssertLoaded();
 
 			var element = _doc.XPathSelectElement(path);
-			element.Add(XElement.Parse(xml));
+			element.Add(addElement);
 		}
 
 		/// <summary>
