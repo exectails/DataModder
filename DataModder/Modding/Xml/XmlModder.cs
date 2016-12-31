@@ -126,8 +126,11 @@ namespace DataModder.Modding.Xml
 		{
 			this.AssertLoaded();
 
-			var element = _doc.XPathSelectElement(path);
-			element.Add(addElement);
+			var elements = _doc.XPathSelectElements(path);
+			foreach (var element in elements)
+			{
+				element.Add(addElement);
+			}
 		}
 
 		/// <summary>
