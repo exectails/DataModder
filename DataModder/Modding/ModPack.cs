@@ -213,6 +213,11 @@ namespace DataModder.Modding
 
 				xml = sb.ToString();
 			}
+			// Fix errors in petcolorset.xml
+			else if (referencePath == @"db\pet\petcolorset.xml")
+			{
+				xml = xml.Replace("\"__locale=\"", "\" __locale=\"");
+			}
 
 			return xml;
 		}
