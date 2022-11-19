@@ -218,6 +218,14 @@ namespace DataModder.Modding
 			{
 				xml = xml.Replace("\"__locale=\"", "\" __locale=\"");
 			}
+			// Fix ampersand signs within attributes in urls.xml
+			else if (referencePath == @"db\urls.xml")
+			{
+				xml = Regex.Replace(xml, @"&(?<next>[^a])", (match) =>
+				{
+					return "&amp;" + match.Groups["next"].Value;
+				});
+			}
 
 			return xml;
 		}
